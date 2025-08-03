@@ -1,0 +1,32 @@
+<template>
+    <div>
+        <input :id="id" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" :type="type"
+            :placeholder="placeholder" :required="required" :disabled="disabled"
+            class="w-full px-4 py-2 border rounded-md transition-all focus:outline-none" :class="[
+                error
+                    ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500'
+                    : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500',
+                disabled ? 'bg-gray-100 cursor-not-allowed' : ''
+            ]" />
+        <p v-if="error" class="mt-1 text-sm text-red-600">
+            {{ Array.isArray(error) ? error[0] : error }}
+        </p>
+    </div>
+</template>
+
+<script setup>
+defineProps({
+    id: String,
+    modelValue: [String, Number],
+    type: {
+        type: String,
+        default: 'text'
+    },
+    placeholder: String,
+    required: Boolean,
+    disabled: Boolean,
+    error: [String, Array]
+})
+
+const emit = defineEmits(['update:modelValue'])
+</script>
