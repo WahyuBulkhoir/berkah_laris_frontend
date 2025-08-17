@@ -14,15 +14,16 @@
         </div>
       </div>
 
-      <div>
-        <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-        <AppInput id="nama" v-model="nama" type="text" placeholder="Nama Lengkap" :error="errors.nama" />
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+          <AppInput id="nama" v-model="nama" type="text" placeholder="Nama Lengkap" :error="errors.nama" />
+        </div>
 
-      <div>
-        <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
-        <AppInput id="no_hp" v-model="no_hp" type="tel" placeholder="08xxxxxxxxxx (Pastikan Nomor ini Aktif di WA)"
-          :error="errors.no_hp" />
+        <div>
+          <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
+          <AppInput id="no_hp" v-model="no_hp" type="tel" placeholder="08xxxxxxxxxx" :error="errors.no_hp" />
+        </div>
       </div>
 
       <div>

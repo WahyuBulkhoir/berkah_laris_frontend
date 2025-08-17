@@ -12,15 +12,17 @@
             <div>
                 <div class="flex justify-between items-center mb-1">
                     <label for="password" class="text-sm font-medium text-gray-700">Password</label>
-                    <NuxtLink to="/auth/password/forgot-password" class="text-xs text-blue-600 hover:underline">
-                        Lupa password ?
-                    </NuxtLink>
+                    <NuxtLink to="/auth/password/forgot-password" class="text-xs text-blue-600 hover:underline">Lupa
+                        password ?</NuxtLink>
                 </div>
                 <AppInput id="password" v-model="password" type="password" placeholder="Password"
                     :error="errors.password" />
             </div>
 
-            <AppButton type="submit" :loading="loading" full>Masuk</AppButton>
+            <AppButton type="submit" :loading="loading" full
+                class="bg-[#0E2046] hover:bg-gradient-to-r hover:from-[#F87B10] hover:to-[#FEB10B]">
+                Masuk
+            </AppButton>
         </form>
     </div>
 </template>
@@ -59,7 +61,7 @@ const login = async () => {
     if (!validateForm()) {
         alert.value = {
             message: 'Mohon isi semua field dengan benar.',
-            type: 'error'
+            type: 'error',
         }
         loading.value = false
         return
@@ -68,7 +70,7 @@ const login = async () => {
     try {
         const credentials = {
             username: username.value,
-            password: password.value
+            password: password.value,
         }
 
         console.log('📤 Login credentials:', credentials)
@@ -84,23 +86,22 @@ const login = async () => {
         } else {
             router.push('/unauthorized')
         }
-
     } catch (err) {
         if (err.response?.status === 422) {
             errors.value = err.response.data.errors || {}
             alert.value = {
                 message: 'Validasi gagal. Periksa input Anda.',
-                type: 'error'
+                type: 'error',
             }
         } else if (err.response?.status === 403) {
             alert.value = {
                 message: err.response.data.message || 'Akun Anda belum diverifikasi. Cek email Anda.',
-                type: 'error'
+                type: 'error',
             }
         } else {
             alert.value = {
                 message: err.response?.data?.message || 'Username atau password salah.',
-                type: 'error'
+                type: 'error',
             }
         }
     } finally {

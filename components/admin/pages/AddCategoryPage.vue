@@ -1,6 +1,5 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <!-- Form Tambah Kategori -->
     <div class="md:col-span-1 bg-white rounded-lg shadow p-6">
       <h2 class="text-xl font-semibold mb-6">➕ Tambah Kategori</h2>
 
@@ -27,7 +26,7 @@
         <AppButton type="submit" class="w-full">Simpan Kategori</AppButton>
       </form>
     </div>
-    <!-- Tabel Kategori -->
+
     <div class="md:col-span-2 bg-white rounded-lg shadow p-6">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-semibold">🗂️ Daftar Kategori</h2>
@@ -53,7 +52,7 @@
 
       <div v-else class="overflow-x-auto">
         <table class="min-w-full">
-          <thead class="bg-blue-600 rounded-lg p-8 text-white">
+          <thead class="bg-[#0E2046] rounded-lg p-8 text-white">
             <tr>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipe Produk</th>
@@ -67,7 +66,7 @@
               <td class="px-4 py-3">{{ cat.tipe_produk }}</td>
               <td class="px-4 py-3">
                 <div class="flex space-x-2">
-                  <button @click="openEditModal(cat)" class="text-blue-600 hover:text-blue-800">
+                  <button @click="openEditModal(cat)" class="text-[#0E2046] hover:text-blue-800">
                     <i class="fas fa-edit"></i>
                   </button>
                   <button @click="confirmDelete(cat.id_kategori)" class="text-red-600 hover:text-red-800">
@@ -81,12 +80,11 @@
       </div>
     </div>
 
-    <!-- Modal Edit -->
     <div v-if="isEditing"
       class="fixed inset-0 z-50 bg-blend-color bg-opacity-40 backdrop-blur-sm flex items-center justify-center px-4">
       <div class="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden relative animate-fade-in">
-        <!-- Header -->
-        <div class="flex justify-between items-center bg-blue-600 px-6 py-4">
+        <div class="flex justify-between items-center px-6 py-4"
+          style="background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);">
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
             <i class="fas fa-edit text-white"></i> Edit Kategori
           </h3>
@@ -95,7 +93,6 @@
           </button>
         </div>
 
-        <!-- Content -->
         <div class="p-6">
           <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message" @close="alert.message = ''"
             class="mb-4" />
@@ -115,11 +112,10 @@
               </select>
             </div>
 
-            <!-- Tombol Aksi -->
             <div class="flex justify-end gap-2 pt-4 border-t mt-6">
               <AppButton type="button" variant="secondary" @click="isEditing = false">Batal</AppButton>
               <button type="submit" :disabled="isSubmitting"
-                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                class="simpan-btn px-5 py-2 text-white text-sm rounded-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                 <i v-if="isSubmitting" class="fas fa-spinner fa-spin"></i>
                 <span>{{ isSubmitting ? 'Menyimpan...' : 'Simpan' }}</span>
               </button>
@@ -217,3 +213,15 @@ const confirmDelete = async (id) => {
   }
 }
 </script>
+
+<style scoped>
+.simpan-btn {
+  background-color: #0E2046;
+  transition: background 0.3s ease;
+}
+
+.simpan-btn:hover {
+  background: #082f83;
+  box-shadow: 0 4px 12px rgba(248, 123, 16, 0.3);
+}
+</style>

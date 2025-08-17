@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-md mx-auto mt-20 text-center">
-        <p v-if="status === 'loading'" class="text-blue-500">Memverifikasi...</p>
+        <p v-if="status === 'loading'" class="text-[#0E2046]">Memverifikasi...</p>
         <app-alert v-else :type="status === 'success' ? 'success' : 'error'" :message="message" />
     </div>
 </template>

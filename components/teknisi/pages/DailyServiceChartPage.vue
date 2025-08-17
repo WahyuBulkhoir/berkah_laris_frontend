@@ -1,19 +1,25 @@
 <template>
     <div class="chart-container" style="height: 250px;">
-        <div class="flex justify-between items-end h-full relative">
+        <div v-if="loading" class="flex items-center justify-center h-full w-full">
+            <div class="flex space-x-1">
+                <div v-for="n in 10" :key="n" class="w-2 h-12 bg-gray-300 rounded animate-pulse"></div>
+            </div>
+        </div>
+
+        <div v-else class="flex justify-between items-end h-full relative">
             <div v-for="(day, index) in days" :key="index" class="chart-bar mx-[-5px] bg-blue-500 rounded"
                 :style="{ height: `${day.height}%`, left: `${(index * 3.3)}%` }" :data-day="day.day"
                 :data-value="day.value" @mouseover="showTooltip($event, day)" @mouseout="hideTooltip">
             </div>
         </div>
 
-        <div v-if="tooltip.show" class="bg-gray-800 text-white px-2 py-1 rounded text-xs absolute z-10"
+        <div v-if="tooltip.show && !loading" class="bg-gray-800 text-white px-2 py-1 rounded text-xs absolute z-10"
             :style="{ bottom: `${tooltip.bottom}px`, left: `${tooltip.left}px`, transform: 'translateX(-50%)' }">
             {{ tooltip.text }}
         </div>
     </div>
 
-    <div class="flex justify-between text-xs text-gray-500 mt-2">
+    <div v-if="!loading" class="flex justify-between text-xs text-gray-500 mt-2">
         <span>1</span>
         <span>6</span>
         <span>11</span>
@@ -25,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
     salesData: {
@@ -33,6 +39,22 @@ const props = defineProps({
         default: () => []
     }
 })
+
+const loading = ref(true)
+
+watch(() => props.salesData, (newVal) => {
+    if (newVal && newVal.length > 0) {
+        loading.value = false
+    }
+}, { immediate: true })
+
+const formatCurrency = (value) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    }).format(value)
+}
 
 const maxValue = computed(() => {
     return Math.max(...props.salesData.map(item => item.total || 0), 1)
@@ -47,7 +69,7 @@ const days = computed(() => {
         return {
             day: i + 1,
             height,
-            value: `Rp ${total.toLocaleString('id-ID')}`
+            value: formatCurrency(total)
         }
     })
 })
@@ -72,6 +94,7 @@ const hideTooltip = () => {
     tooltip.value.show = false
 }
 </script>
+
 <style scoped>
 .chart-bar {
     position: absolute;

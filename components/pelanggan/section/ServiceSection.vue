@@ -11,14 +11,13 @@
             </div>
 
             <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Daftar Layanan -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-md hover:-translate-y-1 hover:shadow-lg transition-transform duration-300">
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Jenis Layanan Servis</h3>
                     <ul class="space-y-4">
                         <li v-for="service in services" :key="service.id" class="flex items-start">
-                            <svg class="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                            <svg class="h-6 w-6 text-transparent bg-gradient-to-tr from-[#F87B10] via-[#FEB10B] to-[#F87B10] bg-clip-text mr-2"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 13l4 4L19 7" />
                             </svg>
@@ -30,16 +29,13 @@
                     </ul>
                 </div>
 
-                <!-- Formulir Pengajuan -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:-translate-y-1 transition-transform duration-300">
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Form Pengajuan Servis</h3>
 
-                    <!-- Alert Notifikasi -->
                     <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message"
                         @close="alert.message = ''" />
 
                     <form @submit.prevent="submitServiceForm" class="space-y-4">
-                        <!-- Tipe Barang -->
                         <div>
                             <label for="tipe_barang" class="block text-sm font-medium text-gray-700">Tipe Barang</label>
                             <input type="text" id="tipe_barang" v-model="serviceForm.tipe_barang" :class="[
@@ -49,7 +45,6 @@
                             <p v-if="errors.tipe_barang" class="text-sm text-red-500 mt-1">{{ errors.tipe_barang }}</p>
                         </div>
 
-                        <!-- Kerusakan -->
                         <div>
                             <label for="kerusakan" class="block text-sm font-medium text-gray-700">Kerusakan</label>
                             <input type="text" id="kerusakan" v-model="serviceForm.kerusakan" :class="[
@@ -59,15 +54,14 @@
                             <p v-if="errors.kerusakan" class="text-sm text-red-500 mt-1">{{ errors.kerusakan }}</p>
                         </div>
 
-                        <!-- Keterangan Tambahan -->
                         <div>
-                            <label for="ket_tambahan" class="block text-sm font-medium text-gray-700">Keterangan
-                                Tambahan</label>
+                            <label for="ket_tambahan" class="block text-sm font-medium text-gray-700">
+                                Keterangan Tambahan
+                            </label>
                             <textarea id="ket_tambahan" v-model="serviceForm.ket_tambahan" rows="3"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"></textarea>
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#F87B10] focus:border-[#F87B10] sm:text-sm p-2 border"></textarea>
                         </div>
 
-                        <!-- Tanggal Servis -->
                         <div>
                             <label for="tanggal_servis" class="block text-sm font-medium text-gray-700">Tanggal
                                 Servis</label>
@@ -76,13 +70,11 @@
                                 errors.tanggal_servis ? 'border-red-500' : 'border-gray-300'
                             ]" />
                             <p v-if="errors.tanggal_servis" class="text-sm text-red-500 mt-1">{{ errors.tanggal_servis
-                            }}</p>
+                                }}</p>
                         </div>
 
-                        <!-- Tombol Submit -->
                         <div class="pt-2">
-                            <button type="submit" :disabled="isSubmitting"
-                                class="w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <button type="submit" :disabled="isSubmitting" class="btn-default">
                                 <span v-if="isSubmitting">
                                     <svg class="animate-spin h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 24 24">
@@ -180,5 +172,35 @@ const submitServiceForm = async () => {
         isSubmitting.value = false
     }
 }
-
 </script>
+
+<style scoped>
+.btn-default {
+    background-color: #0E2046;
+    color: white;
+    border-radius: 0.375rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-weight: 500;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14, 32, 70, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 18px rgba(248, 123, 16, 0.4);
+}
+
+.btn-default:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+</style>

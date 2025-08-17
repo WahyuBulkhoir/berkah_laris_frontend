@@ -9,16 +9,14 @@
         <div v-else-if="pesanans.length === 0" class="text-center text-gray-500 py-10">
             <i class="fas fa-box-open text-3xl mb-4"></i>
             <p>Belum ada pemesanan.</p>
-            <NuxtLink to="/produk"
-                class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+            <NuxtLink to="/produk" class="mt-4 inline-block btn-default px-4 py-2 rounded-md text-white font-semibold">
                 Belanja Sekarang
             </NuxtLink>
         </div>
 
         <div v-else class="space-y-6">
             <div class="text-right">
-                <button @click="fetchPesanans"
-                    class="mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                <button @click="fetchPesanans" class="mb-4 btn-default px-4 py-2 rounded-md text-white font-semibold">
                     🔄 Refresh Pemesanan
                 </button>
             </div>
@@ -113,3 +111,17 @@ definePageMeta({
     middleware: 'auth-pelanggan'
 })
 </script>
+
+<style scoped>
+.btn-default {
+    background-color: #0E2046;
+    box-shadow: 0 4px 8px rgba(20, 71, 230, 0.3);
+    transition: background 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 14px rgba(248, 123, 16, 0.5);
+}
+</style>

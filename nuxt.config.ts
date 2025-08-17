@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
@@ -25,19 +25,16 @@ export default defineNuxtConfig({
     }
   },
 
-  // Global CSS
   css: [
     '~/assets/css/tailwind.css',
     '@fortawesome/fontawesome-free/css/all.min.css'
   ],
 
-  // Nuxt 3 Modules
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt'
   ],
 
-  // Runtime Config
   runtimeConfig: {
     public: {
       apiBase: process.env.API_URL || 'http://localhost:8000/api',
@@ -45,7 +42,6 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro for Static Generation
   nitro: {
     devProxy: {
       '/api': {

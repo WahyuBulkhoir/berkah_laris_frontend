@@ -5,10 +5,11 @@
         <!-- Tombol Refresh (hanya jika ada servis) -->
         <div v-if="servisList.length" class="text-right mb-4">
             <button @click="fetchUserServis" :disabled="isLoading"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed">
+                class="refresh-btn px-4 py-2 rounded-md text-white font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed">
                 🔄 Refresh Servis
             </button>
         </div>
+
         <div v-if="isLoading" class="text-center text-gray-500 py-10">
             <i class="fas fa-spinner fa-spin mr-2"></i> Memuat data servis...
         </div>
@@ -89,3 +90,24 @@ onMounted(fetchUserServis)
 
 definePageMeta({ layout: 'pelanggan', middleware: 'auth-pelanggan' })
 </script>
+
+<style scoped>
+.refresh-btn {
+    background-color: #0E2046;
+    /* biru gelap */
+}
+
+.refresh-btn:hover:not(:disabled) {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    /* gradient biru, contoh */
+}
+
+.refresh-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.refresh-btn {
+    transition: background-color 0.3s ease, background 0.3s ease;
+}
+</style>

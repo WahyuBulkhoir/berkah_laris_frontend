@@ -1,9 +1,9 @@
 <template>
     <div class="bg-white rounded-lg shadow p-6">
+
         <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message" @close="alert.message = ''"
             class="mb-4" />
 
-        <!-- Search & Filter -->
         <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
             <h2 class="text-xl font-semibold">🧾 Daftar Pemesanan</h2>
             <div class="flex flex-col md:flex-row gap-3">
@@ -24,26 +24,23 @@
                 </select>
 
                 <button @click="fetchPemesanan"
-                    class="px-4 py-2 bg-primary-600 text-blue-600 rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
+                    class="px-4 py-2 bg-primary-600 text-[#0E2046] rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
                     <i class="fas fa-sync-alt mr-2"></i> Refresh
                 </button>
             </div>
         </div>
 
-        <!-- Loading -->
         <div v-if="loading" class="text-center py-10 text-gray-500">
             <i class="fas fa-spinner fa-spin mr-2"></i>Memuat data pemesanan...
         </div>
 
-        <!-- Tidak Ada Data -->
         <div v-else-if="filteredPemesanan.length === 0" class="text-center text-gray-500 py-10">
             <i class="fas fa-exclamation-circle text-xl mr-2"></i>Tidak ada pemesanan ditemukan.
         </div>
 
-        <!-- Tabel -->
         <div v-else class="overflow-x-auto">
             <table class="min-w-full">
-                <thead class="bg-blue-600 text-white">
+                <thead class="bg-[#0E2046] text-white">
                     <tr>
                         <th class="text-center px-4 py-3">Nama Pelanggan</th>
                         <th class="text-center px-4 py-3">Tanggal</th>
@@ -56,9 +53,9 @@
                 <tbody>
                     <tr v-for="pesan in paginatedPemesanan" :key="pesan.id_pemesanan"
                         class="bg-white divide-y divide-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-4 text-center">{{ pesan.nama_penerima }}</td>
-                        <td class="py-3 px-4 text-center">{{ formatDate(pesan.tgl_pemesanan) }}</td>
-                        <td class="py-3 px-4 text-center">Rp {{ pesan.total.toLocaleString('id-ID') }}</td>
+                        <td class="py-3 px-4 text-left">{{ pesan.nama_penerima }}</td>
+                        <td class="py-3 px-4 text-left">{{ formatDate(pesan.tgl_pemesanan) }}</td>
+                        <td class="py-3 px-4 text-left">Rp {{ pesan.total.toLocaleString('id-ID') }}</td>
                         <td class="py-3 px-4 text-center">
                             <div v-if="pesan.status_pesanan === 'Selesai' && pesan.payment_status === 'paid'"
                                 class="text-sm font-medium text-gray-700">
@@ -81,7 +78,7 @@
                         </td>
                         <td class="py-3 px-4 text-center">
                             <button @click="openDetailModal(pesan)"
-                                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
+                                class="btn-detail px-3 py-1 text-white rounded-md text-sm">
                                 <i class="fas fa-eye mr-1"></i> Lihat Detail
                             </button>
                         </td>
@@ -90,7 +87,6 @@
             </table>
         </div>
 
-        <!-- Pagination -->
         <div class="mt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
             <div class="text-sm text-gray-500">
                 Halaman {{ currentPage }} dari {{ totalPages }} | Total {{ filteredPemesanan.length }} pemesanan
@@ -101,7 +97,7 @@
                     &lt;
                 </button>
                 <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                    :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-blue-600 text-white' : '']">
+                    :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-[#0E2046] text-white' : '']">
                     {{ page }}
                 </button>
                 <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
@@ -110,8 +106,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- Modal Detail -->
         <OrderListDetail :isOpen="showDetailModal" :detail="selectedPemesanan" @close="showDetailModal = false" />
     </div>
 </template>
@@ -211,3 +205,15 @@ const openDetailModal = (pesan) => {
 
 onMounted(fetchPemesanan)
 </script>
+
+<style scoped>
+.btn-detail {
+    background-color: #0E2046;
+    transition: background 0.3s ease;
+}
+
+.btn-detail:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 4px 12px rgba(248, 123, 16, 0.3);
+}
+</style>

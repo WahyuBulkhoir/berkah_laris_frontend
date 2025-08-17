@@ -1,6 +1,16 @@
 <template>
-    <div>
-        <div class="flex justify-between items-end h-64 relative">
+    <div class="chart-container">
+        <div v-if="loading" class="flex items-center justify-center h-full">
+            <div class="flex space-x-2">
+                <div class="w-2 h-10 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-16 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-8 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-20 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-12 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-14 bg-gray-300 rounded animate-pulse"></div>
+            </div>
+        </div>
+        <div v-else class="flex justify-between items-end h-64 relative">
             <div v-for="(month, index) in months" :key="index" class="chart-bar"
                 :style="{ height: `${month.height}%`, left: `${2 + (index * 8.5)}%` }" :data-month="month.name"
                 :data-value="formatCurrency(month.value)" @mouseover="showTooltip($event, month)"
@@ -12,8 +22,6 @@
             :style="{ bottom: `${tooltip.bottom}px`, left: `${tooltip.left}px`, transform: 'translateX(-50%)' }">
             {{ tooltip.text }}
         </div>
-
-        <!-- Label Bulan -->
         <div class="flex justify-between text-xs text-gray-500 mt-2 px-2 relative z-10">
             <span v-for="(month, index) in months" :key="'label-' + index" class="month-label w-[4%] text-center block">
                 {{ month.name }}
@@ -30,6 +38,7 @@ import { useNuxtApp } from '#app'
 const { $api } = useNuxtApp()
 
 const months = ref([])
+const loading = ref(true)
 const tooltip = ref({
     show: false,
     text: '',
@@ -63,8 +72,6 @@ const formatCurrency = (value) => {
 const fetchData = async () => {
     try {
         const currentYear = new Date().getFullYear()
-
-        // Panggil endpoint API yang sesuai
         const { data } = await $api.get('/laporan/penjualan', {
             params: { tahun: currentYear }
         })
@@ -80,6 +87,8 @@ const fetchData = async () => {
         }))
     } catch (error) {
         console.error('Gagal mengambil data grafik:', error)
+    } finally {
+        loading.value = false
     }
 }
 
@@ -107,7 +116,6 @@ onMounted(fetchData)
     transition: transform 0.3s ease;
 }
 
-/* Saat layar mobile (misalnya max 768px), miringkan label */
 @media (max-width: 768px) {
     .month-label {
         transform: rotate(-65deg);

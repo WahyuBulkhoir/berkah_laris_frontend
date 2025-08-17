@@ -43,11 +43,16 @@
 
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Produk</label>
-      <input type="file" accept="image/*" @change="handleFileUpload"
-        class="w-full border px-3 py-2 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-md file:bg-blue-600 file:text-white hover:file:bg-blue-700" />
+      <input type="file" accept="image/*" @change="handleFileUpload" ref="fileInput" class="w-full border px-3 py-2 rounded-lg
+           file:mr-4 file:py-2 file:px-4 file:rounded-md
+           file:bg-[#0E2046] file:text-white hover:file:bg-[#082f83]" />
 
-      <div v-if="previewImage" class="mt-4">
+      <div v-if="previewImage" class="mt-4 relative w-40 h-40">
         <img :src="previewImage" alt="Preview" class="w-40 h-40 object-cover rounded border" />
+        <button type="button" @click="removeImage"
+          class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow hover:bg-red-600">
+          ✕
+        </button>
       </div>
     </div>
 
@@ -83,6 +88,7 @@ const previewImage = ref(null)
 const kategoris = ref([])
 const alert = ref({ message: '', type: 'info' })
 const loading = ref(false)
+const fileInput = ref(null)
 
 const fetchKategori = async () => {
   try {
@@ -112,6 +118,14 @@ const handleFileUpload = (e) => {
   }
 }
 
+const removeImage = () => {
+  form.value.gambar_produk = null
+  previewImage.value = null
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
+}
+
 const validateForm = () => {
   if (!form.value.nama_produk) {
     alert.value = { message: 'Nama produk wajib diisi!', type: 'error' }
@@ -129,6 +143,12 @@ const validateForm = () => {
     alert.value = { message: 'Harga modal harus diisi dan lebih dari 0!', type: 'error' }
     return false
   }
+
+  if (Number(form.value.harga) <= Number(form.value.modal)) {
+    alert.value = { message: 'Harga produk harus lebih besar dari modal!', type: 'error' }
+    return false
+  }
+
   if (!form.value.id_kategori) {
     alert.value = { message: 'Kategori produk wajib dipilih!', type: 'error' }
     return false
@@ -154,16 +174,18 @@ const submitForm = async () => {
     const { $api } = useNuxtApp()
     await $api.post('/produk', payload)
     alert.value = { message: 'Produk berhasil ditambahkan!', type: 'success' }
+
     form.value = {
       nama_produk: '',
       sku: '',
       harga: '',
+      modal: '',
       stok: '',
       gambar_produk: null,
       deskripsi: '',
       id_kategori: ''
     }
-    previewImage.value = null
+    removeImage()
   } catch (error) {
     alert.value = {
       message: error?.response?.data?.message || 'Gagal menambahkan produk.',

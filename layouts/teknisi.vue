@@ -1,9 +1,7 @@
 <template>
     <div class="flex h-screen">
-        <!-- Sidebar terhubung dengan reactive state -->
         <Sidebar :isOpen="isSidebarOpen" />
 
-        <!-- Main content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <Header @toggle-sidebar="toggleSidebar" />
             <main class="flex-1 overflow-y-auto bg-gray-100 p-4">

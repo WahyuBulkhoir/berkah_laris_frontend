@@ -18,7 +18,6 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                <!-- Skeleton Loading -->
                 <tr v-if="loading" v-for="i in 5" :key="'skeleton-' + i" class="animate-pulse">
                     <td class="px-4 py-3">
                         <div class="h-4 bg-gray-200 rounded w-32"></div>
@@ -34,14 +33,12 @@
                     </td>
                 </tr>
 
-                <!-- No Data -->
                 <tr v-else-if="lowStockProducts.length === 0">
                     <td colspan="4" class="text-center text-gray-400 py-6 text-sm">
                         Tidak ada produk dengan stok menipis.
                     </td>
                 </tr>
 
-                <!-- Data -->
                 <tr v-else v-for="(product, index) in lowStockProducts" :key="index"
                     class="hover:bg-gray-50 transition duration-200">
                     <td class="px-4 py-3 text-sm font-medium text-gray-800" :title="product.nama_produk">

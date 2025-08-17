@@ -3,7 +3,10 @@
         <div class="flex justify-between">
             <div>
                 <div class="text-gray-500 text-sm">{{ title }}</div>
-                <div class="text-2xl font-bold text-gray-800">{{ value }}</div>
+                <div class="text-2xl font-bold text-gray-800">
+                    <span v-if="loading">Memuat...</span>
+                    <span v-else>{{ value }}</span>
+                </div>
                 <div :class="trendClass">
                     <i :class="trendIcon"></i> {{ change }}
                 </div>
@@ -16,7 +19,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
     title: String,
@@ -24,32 +27,33 @@ const props = defineProps({
     change: String,
     icon: String,
     color: String,
-    trend: String
-});
+    trend: String,
+    loading: Boolean
+})
 
 const trendClass = computed(() => {
     switch (props.trend) {
         case 'up':
-            return 'text-green-500 text-sm mt-1';
+            return 'text-green-500 text-sm mt-1'
         case 'down':
-            return 'text-red-500 text-sm mt-1';
+            return 'text-red-500 text-sm mt-1'
         case 'waiting':
-            return 'text-yellow-500 text-sm mt-1';
+            return 'text-yellow-500 text-sm mt-1'
         default:
-            return 'text-gray-500 text-sm mt-1';
+            return 'text-gray-500 text-sm mt-1'
     }
-});
+})
 
 const trendIcon = computed(() => {
     switch (props.trend) {
         case 'up':
-            return 'fas fa-arrow-up';
+            return 'fas fa-arrow-up'
         case 'down':
-            return 'fas fa-arrow-down';
+            return 'fas fa-arrow-down'
         case 'waiting':
-            return 'fas fa-clock';
+            return 'fas fa-clock'
         default:
-            return 'fas fa-minus';
+            return 'fas fa-minus'
     }
-});
+})
 </script>

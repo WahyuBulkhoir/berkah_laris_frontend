@@ -9,10 +9,10 @@
         <!-- Filter dan Pencarian -->
         <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
             <input v-model="search" type="text" placeholder="Cari nama produk..."
-                class="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
+                class="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#F87B10] focus:border-[#F87B10]" />
 
             <select v-model="filter"
-                class="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                class="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#F87B10] focus:border-[#F87B10]">
                 <option value="">Semua Tipe</option>
                 <option value="Baru">Baru</option>
                 <option value="Bekas">Bekas</option>
@@ -29,7 +29,7 @@
         <div v-else-if="filteredProducts.length"
             class="grid grid-cols-2 gap-y-10 gap-x-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             <div v-for="product in filteredProducts" :key="product.id_produk"
-                class="group relative bg-white rounded-lg shadow-md p-4 transition duration-300 hover:-translate-y-1 hover:shadow-xl border border-blue-400">
+                class="group relative bg-white rounded-lg shadow-md p-4 transition duration-300 hover:-translate-y-1 hover:shadow-xl border border-[#F87B10]">
 
                 <div v-if="product.stok === 0"
                     class="absolute -top-[-5] -left-6 transform -rotate-45 bg-red-600 text-white text-xs font-bold px-6 py-1 z-20 shadow-md rounded">
@@ -52,12 +52,12 @@
                     </h3>
                     <div class="relative mt-4">
                         <p class="text-sm text-gray-500 mt-1 line-clamp-3 max-h-28 overflow-hidden"
-                            style="mask-image: linear-gradient(180deg, #000 60%, transparent);">
+                            style="mask-image: linear-gradient(180deg, #000 60%, transparent)">
                             {{ product.deskripsi }}
                         </p>
                     </div>
                     <button @click="showProductDetail(product)"
-                        class="text-sm text-blue-600 mt-1 hover:underline focus:outline-none">
+                        class="text-sm text-transparent bg-gradient-to-tr from-[#0E2046] via-[#1A3B7C] to-[#2C53A9] bg-clip-text mt-1 hover:underline focus:outline-none">
                         Lihat selengkapnya
                     </button>
                 </div>
@@ -71,9 +71,9 @@
 
                 <!-- TOMBOL DETAIL -->
                 <button @click="showProductDetail(product)" :disabled="product.stok === 0"
-                    class="mt-4 w-full text-white py-2 px-4 rounded-md transition-colors" :class="product.stok === 0
+                    class="mt-4 w-full rounded-md transition-colors text-white py-2 px-4" :class="product.stok === 0
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-blue-600 hover:bg-blue-700'">
+                        : 'btn-default'">
                     {{ product.stok === 0 ? 'Stok Habis' : 'Detail Produk' }}
                 </button>
             </div>
@@ -190,5 +190,32 @@ definePageMeta({ layout: 'pelanggan', middleware: 'auth-pelanggan' })
 
 .hover-bounce-random {
     animation: bounce-random 0.6s infinite;
+}
+
+/* Tombol default: warna #0E2046 */
+.btn-default {
+    background-color: #0E2046;
+    color: white;
+    border-radius: 0.375rem;
+    /* rounded-md */
+    padding-left: 1rem;
+    /* px-4 */
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    /* py-2 */
+    padding-bottom: 0.5rem;
+    font-weight: 500;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14, 32, 70, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 18px rgba(248, 123, 16, 0.4);
 }
 </style>

@@ -22,7 +22,6 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                <!-- Loading Skeleton -->
                 <tr v-if="loading" v-for="i in 5" :key="'skeleton-' + i" class="animate-pulse">
                     <td class="px-4 py-3">
                         <div class="h-4 bg-gray-200 rounded w-24"></div>
@@ -38,14 +37,12 @@
                     </td>
                 </tr>
 
-                <!-- No Data -->
                 <tr v-else-if="orders.length === 0">
                     <td colspan="4" class="text-center text-gray-400 py-6 text-sm">
                         Tidak ada pesanan terbaru.
                     </td>
                 </tr>
 
-                <!-- Data Rows -->
                 <tr v-else v-for="(order, index) in orders" :key="index"
                     class="hover:bg-gray-50 transition-colors duration-200 ease-in-out">
                     <td class="px-4 py-3 text-sm font-medium text-gray-800">
@@ -81,7 +78,6 @@ defineProps({
     }
 })
 
-// Status badge class generator
 const getStatusBadge = (status) => {
     switch (status) {
         case 'Pesanan Dibuat':

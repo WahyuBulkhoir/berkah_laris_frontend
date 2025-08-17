@@ -1,9 +1,9 @@
 <template>
     <div class="bg-white rounded-lg shadow p-6">
+
         <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message" @close="alert.message = ''"
             class="mb-4" />
 
-        <!-- Filter dan Header -->
         <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0">
             <h2 class="text-xl font-semibold">📋 Daftar Servis</h2>
             <div class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
@@ -23,13 +23,12 @@
                 </select>
 
                 <button @click="fetchServices"
-                    class="px-4 py-2 bg-primary-600 text-blue-600 rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
+                    class="px-4 py-2 bg-primary-600 text-[#0E2046] rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
                     <i class="fas fa-sync-alt mr-2"></i> Refresh
                 </button>
             </div>
         </div>
 
-        <!-- Loading dan Error State -->
         <div v-if="isLoading" class="text-center py-10 text-gray-500">
             <i class="fas fa-spinner fa-spin mr-2"></i>Memuat data servis...
         </div>
@@ -40,11 +39,10 @@
             <i class="fas fa-exclamation-circle text-xl mr-2"></i>Tidak ada servis ditemukan
         </div>
 
-        <!-- Table Daftar Servis -->
         <div v-else>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
-                    <thead class="bg-blue-600 rounded-lg p-8 text-white">
+                    <thead class="bg-[#0E2046] rounded-lg p-8 text-white">
                         <tr>
                             <th class="text-center py-3 px-4">Tipe Barang</th>
                             <th class="text-center py-3 px-4">Tanggal Servis</th>
@@ -58,8 +56,8 @@
                     <tbody>
                         <tr v-for="service in paginatedServices" :key="service.id_servis"
                             class="bg-white divide-y divide-gray-400 hover:bg-gray-200">
-                            <td class="py-3 px-4 text-center">{{ service.tipe_barang }}</td>
-                            <td class="py-3 px-4 text-center">{{ formatDate(service.tanggal_servis) }}</td>
+                            <td class="py-3 px-4 text-left">{{ service.tipe_barang }}</td>
+                            <td class="py-3 px-4 text-left">{{ formatDate(service.tanggal_servis) }}</td>
                             <td class="py-3 px-4 text-center">{{ service.status_servis }}</td>
                             <td class="py-3 px-4 text-center">
                                 <span
@@ -68,7 +66,7 @@
                                     {{ service.payment_status || 'unpaid' }}
                                 </span>
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-left">
                                 <span v-if="service.total_biaya">
                                     Rp {{ Number(service.total_biaya).toLocaleString('id-ID') }}
                                 </span>
@@ -85,7 +83,7 @@
                             </td>
                             <td class="py-3 px-4 text-center">
                                 <button @click="showDetail(service)"
-                                    class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
+                                    class="btn-detail px-3 py-1 text-white rounded-md text-sm">
                                     <i class="fas fa-eye mr-1"></i> Lihat Detail
                                 </button>
                             </td>
@@ -94,7 +92,6 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
             <div class="mt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                 <div class="text-sm text-gray-500">
                     Halaman {{ currentPage }} dari {{ totalPages }} | Total {{ filteredServices.length }} servis
@@ -103,7 +100,7 @@
                     <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
                         class="px-3 py-1 border rounded-md hover:bg-gray-100">&lt;</button>
                     <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                        :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-blue-600 text-white' : '']">
+                        :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-[#0E2046] text-white' : '']">
                         {{ page }}
                     </button>
                     <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
@@ -111,8 +108,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Detail -->
         <ServiceDetailList :isOpen="selectedDetail !== null" :detail="selectedDetail" @close="selectedDetail = null"
             @updated="fetchServices" />
     </div>
@@ -195,3 +190,15 @@ const generateMessage = (service) => {
 
 onMounted(fetchServices)
 </script>
+
+<style scoped>
+.btn-detail {
+    background-color: #0E2046;
+    transition: background 0.3s ease;
+}
+
+.btn-detail:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 4px 12px rgba(248, 123, 16, 0.3);
+}
+</style>

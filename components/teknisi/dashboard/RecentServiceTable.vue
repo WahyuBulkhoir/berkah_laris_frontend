@@ -23,7 +23,6 @@
             </thead>
 
             <tbody class="divide-y divide-gray-100">
-                <!-- Skeleton Loading -->
                 <tr v-if="loading" v-for="i in 5" :key="'skeleton-' + i" class="animate-pulse">
                     <td class="px-4 py-3">
                         <div class="h-4 bg-gray-200 rounded w-24"></div>
@@ -45,7 +44,6 @@
                     </td>
                 </tr>
 
-                <!-- Data Rows -->
                 <tr v-else v-for="(order, index) in orders" :key="index"
                     class="hover:bg-gray-50 transition-colors duration-200 ease-in-out">
                     <td class="px-4 py-3 text-sm font-medium text-gray-800">
@@ -81,7 +79,6 @@ defineProps({
     }
 })
 
-// Helper untuk badge warna status
 const getStatusBadge = (status) => {
     switch (status) {
         case 'Selesai':

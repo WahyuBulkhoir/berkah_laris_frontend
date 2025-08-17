@@ -15,7 +15,6 @@ export const useAuthStore = defineStore('auth', {
         const res = await $api.post('/login', credentials)
         const { user, role, token } = res.data
 
-        // ❗️Cek apakah user adalah pelanggan dan belum verifikasi email
         if (user.role_id === 2 && !user.email_verified_at) {
           throw {
             response: {
@@ -39,7 +38,7 @@ export const useAuthStore = defineStore('auth', {
         }
       } catch (error) {
         console.error('🔴 Gagal login:', error.response?.data)
-        throw error // diteruskan ke komponen login
+        throw error
       }
     },
 

@@ -27,7 +27,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-// Props dari luar (SalesReportPage.vue)
 const props = defineProps({
     salesData: {
         type: Array,
@@ -35,7 +34,6 @@ const props = defineProps({
     }
 })
 
-// Konversi ke height persen untuk visual
 const maxValue = computed(() => {
     return Math.max(...props.salesData.map(item => item.total || 0), 1)
 })
@@ -54,7 +52,6 @@ const days = computed(() => {
     })
 })
 
-// Tooltip logika
 const tooltip = ref({
     show: false,
     text: '',

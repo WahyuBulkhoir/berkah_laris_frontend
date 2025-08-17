@@ -1,6 +1,5 @@
 <template>
     <div class="mb-6">
-        <!-- Statistik Kartu -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <StatCard title="Total Penjualan" :loading="loading"
                 :value="'Rp ' + Number(totalPenjualan).toLocaleString('id-ID')" :change="`${totalPesanan} pesanan`"
@@ -13,7 +12,6 @@
                 icon="fas fa-clipboard-list" color="yellow" trend="waiting" />
         </div>
 
-        <!-- Grafik Penjualan & Produk Terlaris -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
             <div class="bg-white rounded-lg shadow p-5 lg:col-span-2">
                 <div class="flex justify-between items-center mb-4">
@@ -22,7 +20,6 @@
                 <MonthlySalesChart :chart-data="salesChartData" />
             </div>
 
-            <!-- Produk Terlaris -->
             <div class="bg-white rounded-lg shadow p-5">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-800">Produk Terlaris</h3>
@@ -31,7 +28,6 @@
             </div>
         </div>
 
-        <!-- Tabel -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="bg-white rounded-lg shadow p-5">
                 <div class="flex justify-between items-center mb-4">

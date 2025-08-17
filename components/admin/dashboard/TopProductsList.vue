@@ -1,6 +1,5 @@
 <template>
     <div class="space-y-4">
-        <!-- Loading State -->
         <div v-if="loading" class="space-y-2 animate-pulse">
             <div v-for="i in 5" :key="i" class="flex items-center space-x-3">
                 <div class="h-10 w-10 rounded-lg bg-gray-200"></div>
@@ -11,20 +10,16 @@
             </div>
         </div>
 
-        <!-- No Data -->
         <div v-else-if="topProducts.length === 0" class="text-gray-400 text-sm text-center">
             Tidak ada data produk terlaris.
         </div>
 
-        <!-- Produk Terlaris -->
         <div v-else v-for="(product, index) in topProducts" :key="index" class="flex items-center space-x-3">
-            <!-- Gambar Produk -->
             <div class="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
                 <img :src="getImageUrl(product.gambar)" alt="gambar produk" class="w-full h-full object-cover"
                     @error="onImageError" />
             </div>
 
-            <!-- Informasi Produk -->
             <div class="flex-1 min-w-0">
                 <div class="flex items-center justify-between space-x-2" :title="product.name">
                     <span class="font-medium truncate max-w-[60%]">

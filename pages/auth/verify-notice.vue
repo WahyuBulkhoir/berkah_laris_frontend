@@ -5,7 +5,7 @@
             <p class="text-gray-600">Kami telah mengirimkan email verifikasi ke alamat Anda. Silakan cek Gmail Anda.</p>
 
             <button @click="resendVerification"
-                class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+                class="w-full py-2 px-4 bg-[#0E2046] text-white rounded-lg hover:bg-gradient-to-t from-[#F87B10] to-[#FEB10B] transition-all"
                 :disabled="loading">
                 {{ loading ? 'Mengirim ulang...' : 'Kirim Ulang Verifikasi' }}
             </button>

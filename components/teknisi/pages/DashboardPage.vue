@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- Stat Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <StatCard title="Total Pendapatan Servis" :loading="loading"
                 :value="`Rp ${Number(stat.total_pendapatan).toLocaleString('id-ID')}`" change="-" icon="fas fa-wallet"
@@ -13,7 +12,6 @@
                 icon="fas fa-clipboard-list" color="yellow" trend="waiting" />
         </div>
 
-        <!-- Chart Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
             <div class="bg-white rounded-lg shadow p-5 lg:col-span-3">
                 <div class="flex justify-between items-center mb-4">
@@ -23,7 +21,6 @@
             </div>
         </div>
 
-        <!-- Servis Terbaru dan Tipe Produk Terlaris -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="bg-white rounded-lg shadow p-5">
                 <div class="flex justify-between items-center mb-4">

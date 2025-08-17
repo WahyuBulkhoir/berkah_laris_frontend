@@ -6,11 +6,9 @@
                 class="inline-block bg-white text-black rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:max-w-4xl w-full">
                 <div class="bg-white px-6 pt-5 pb-6">
 
-                    <!-- ALERT -->
                     <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message"
                         @close="alert.message = ''" class="mb-4" />
 
-                    <!-- Header -->
                     <div class="flex justify-between items-center border-b pb-4">
                         <h3 class="text-2xl font-bold text-gray-900">Detail Produk</h3>
                         <button @click="closeModal" class="text-gray-500 hover:text-gray-700">
@@ -21,21 +19,18 @@
                         </button>
                     </div>
 
-                    <!-- Body -->
                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Image -->
                         <div class="bg-gray-100 p-6 rounded-xl flex items-center justify-center">
                             <img :src="product?.gambar_produk ? imageUrl(product.gambar_produk) : '/img/product-default.jpg'"
                                 alt="Gambar Produk" class="h-64 w-64 object-cover rounded-xl shadow-2xl" />
                         </div>
 
-                        <!-- Info -->
                         <div>
                             <h2 class="text-3xl font-bold text-gray-800">
                                 {{ product?.nama_produk || 'Nama produk tidak tersedia' }}
                             </h2>
 
-                            <p class="mt-3 text-2xl font-semibold text-blue-600">
+                            <p class="mt-3 text-2xl font-semibold text-[#F87B10]">
                                 Rp {{ formatHarga(product?.harga || 0) }}
                             </p>
 
@@ -55,7 +50,6 @@
                                 </span>
                             </div>
 
-                            <!-- Quantity Control -->
                             <div class="mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Jumlah</h3>
                                 <div class="mt-2 flex items-center gap-4">
@@ -67,7 +61,6 @@
                                 </div>
                             </div>
 
-                            <!-- Deskripsi -->
                             <div class="mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Deskripsi</h3>
                                 <p class="mt-2 text-gray-600 whitespace-pre-line">
@@ -75,7 +68,6 @@
                                 </p>
                             </div>
 
-                            <!-- Spesifikasi -->
                             <div class="mt-6" v-if="product?.spesifikasi?.length">
                                 <h3 class="text-lg font-medium text-gray-900">Spesifikasi</h3>
                                 <ul class="mt-2 space-y-2">
@@ -93,10 +85,10 @@
                         </div>
                     </div>
 
-                    <!-- Actions -->
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
                         <button @click="addToCartHandler" :disabled="isAddingToCart || product?.stok <= 0" class="w-full inline-flex justify-center items-center px-5 py-3 text-sm font-medium text-white rounded-md transition
-           bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                            btn-default
+                            disabled:opacity-50 disabled:cursor-not-allowed">
                             <template v-if="isAddingToCart">
                                 <i class="fas fa-spinner fa-spin mr-2"></i> Menambahkan...
                             </template>
@@ -203,3 +195,34 @@ watch(() => props.isOpen, (val) => {
     }
 })
 </script>
+
+<style scoped>
+.btn-default {
+    background-color: #0E2046;
+    color: white;
+    border-radius: 0.375rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-weight: 500;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14, 32, 70, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 18px rgba(248, 123, 16, 0.4);
+}
+
+.btn-default:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+</style>

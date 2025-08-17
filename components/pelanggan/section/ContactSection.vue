@@ -8,12 +8,11 @@
                 </p>
             </div>
 
-            <!-- Info Kontak -->
             <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div v-for="contact in contactInfo" :key="contact.title"
                     class="bg-white p-6 rounded-lg shadow-md text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div
-                        class="inline-flex items-center justify-center h-12 w-12 rounded-md bg-blue-600 text-white mb-4">
+                        class="inline-flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-tr from-[#F87B10] via-[#FEB10B] to-[#F87B10] text-white mb-4">
                         <i :class="contact.icon" class="text-lg"></i>
                     </div>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">{{ contact.title }}</h3>
@@ -21,7 +20,6 @@
                 </div>
             </div>
 
-            <!-- Form Kontak -->
             <div
                 class="mt-12 bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Kirim Pesan</h3>
@@ -47,8 +45,7 @@
                             class="mt-1 py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"></textarea>
                     </div>
                     <div class="sm:col-span-2">
-                        <button type="submit" :disabled="isLoading"
-                            class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60">
+                        <button type="submit" :disabled="isLoading" class="btn-default">
                             <i v-if="isLoading" class="fas fa-spinner fa-spin mr-2"></i>
                             {{ isLoading ? 'Mengirim Pesan...' : 'Kirim Pesan' }}
                         </button>
@@ -122,3 +119,37 @@ async function submitContactForm() {
     }
 }
 </script>
+
+<style scoped>
+.btn-default {
+    background-color: #0E2046;
+    color: white;
+    border-radius: 0.375rem;
+    /* rounded-md */
+    padding-left: 1rem;
+    /* px-4 */
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    /* py-3 */
+    padding-bottom: 0.75rem;
+    font-weight: 500;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14, 32, 70, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 18px rgba(248, 123, 16, 0.4);
+}
+
+.btn-default:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>

@@ -1,6 +1,5 @@
 <template>
     <div class="space-y-6 mb-6">
-        <!-- Header & Pilihan Bulan + Tombol Unduh -->
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-10">
                 <h2 class="text-2xl font-bold text-gray-800">🛠️ Laporan Servis</h2>
@@ -14,30 +13,28 @@
                         </option>
                     </select>
 
-                    <!-- Tombol Unduh Excel -->
                     <button @click="downloadLaporan('excel')" :disabled="loadingExcel"
-                        class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md flex items-center transition-all duration-200 shadow-sm disabled:opacity-60">
+                        class="btn-unduh px-5 py-2 text-white text-sm font-medium rounded-md flex items-center transition-all duration-200 shadow-sm disabled:opacity-60">
                         <span v-if="loadingExcel" class="animate-pulse">⏳ Mengunduh...</span>
                         <span v-else>📥 Unduh Excel</span>
                     </button>
 
-                    <!-- Tombol Unduh PDF -->
                     <button @click="downloadLaporan('pdf')" :disabled="loadingPDF"
-                        class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md flex items-center transition-all duration-200 shadow-sm disabled:opacity-60">
+                        class="btn-unduh px-5 py-2 text-white text-sm font-medium rounded-md flex items-center transition-all duration-200 shadow-sm disabled:opacity-60">
                         <span v-if="loadingPDF" class="animate-pulse">⏳ Mengunduh...</span>
                         <span v-else>📄 Unduh PDF</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Statistik Utama -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-blue-50 hover:shadow-lg transition-shadow rounded-xl p-5 shadow group cursor-pointer">
                     <div class="flex justify-between items-center">
                         <div>
                             <p class="text-sm text-blue-600 font-semibold">Total Pendapatan Servis</p>
-                            <p class="text-2xl font-bold text-blue-800">Rp {{
-                                Number(totalPendapatan).toLocaleString('id-ID') }}
+                            <p class="text-2xl font-bold text-blue-800">
+                                <span v-if="loadingData">Memuat...</span>
+                                <span v-else>Rp {{ Number(totalPendapatan).toLocaleString('id-ID') }}</span>
                             </p>
                         </div>
                         <div
@@ -51,7 +48,10 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <p class="text-sm text-green-600 font-semibold">Total Barang Servis</p>
-                            <p class="text-2xl font-bold text-green-800">{{ totalBarangServis }} Unit</p>
+                            <p class="text-2xl font-bold text-green-800">
+                                <span v-if="loadingData">Memuat...</span>
+                                <span v-else>{{ totalBarangServis }} Unit</span>
+                            </p>
                         </div>
                         <div
                             class="bg-blue-100 rounded-full h-12 w-12 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -64,7 +64,10 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <p class="text-sm text-purple-600 font-semibold">Total Pelanggan Servis</p>
-                            <p class="text-2xl font-bold text-purple-800">{{ totalPelanggan }} orang</p>
+                            <p class="text-2xl font-bold text-purple-800">
+                                <span v-if="loadingData">Memuat...</span>
+                                <span v-else>{{ totalPelanggan }} orang</span>
+                            </p>
                         </div>
                         <div
                             class="bg-blue-100 rounded-full h-12 w-12 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -75,17 +78,20 @@
             </div>
         </div>
 
-        <!-- Grafik Harian -->
         <div class="bg-white rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold mb-4">Servis {{ selectedLabel }}</h3>
-            <div v-if="salesData.length === 0" class="text-sm text-gray-500 italic">Belum ada data servis harian di
-                bulan ini.</div>
+            <div v-if="loadingData" class="flex items-end space-x-2 h-48 animate-pulse">
+                <div v-for="i in 7" :key="i" class="bg-gray-200 rounded w-8" :style="{ height: `${20 + i * 10}px` }">
+                </div>
+            </div>
+
+            <div v-else-if="salesData.length === 0" class="text-sm text-gray-500 italic">
+                Belum ada data servis harian di bulan ini.
+            </div>
             <DailyServiceChartPage v-else :salesData="salesData" />
         </div>
 
-        <!-- Servis Terbaru & Metode Pembayaran -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <!-- Servis Terbaru -->
             <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-6">
                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Servis Terbaru</h3>
                 <div class="divide-y divide-gray-200">
@@ -104,7 +110,11 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div v-for="(product, index) in topProducts" :key="index" class="flex justify-between py-3">
+                        <div v-if="topProducts.length === 0" class="text-sm text-gray-500 italic py-3">
+                            Belum ada data servis terbaru saat ini.
+                        </div>
+                        <div v-else v-for="(product, index) in topProducts" :key="index"
+                            class="flex justify-between py-3">
                             <div>
                                 <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
                                 <div class="text-xs text-gray-500">{{ product.sold }} kali servis</div>
@@ -119,7 +129,6 @@
                 </div>
             </div>
 
-            <!-- Metode Pembayaran -->
             <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-6">
                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Metode Pembayaran Servis</h3>
                 <div class="space-y-4">
@@ -134,7 +143,11 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div v-for="(method, index) in paymentMethods" :key="index" class="flex items-center gap-3">
+                        <div v-if="topProducts.length === 0" class="text-sm text-gray-500 italic py-3">
+                            Belum ada metode pembayaran saat ini.
+                        </div>
+                        <div v-else v-for="(method, index) in paymentMethods" :key="index"
+                            class="flex items-center gap-3">
                             <div class="h-10 w-10 rounded-full flex items-center justify-center bg-opacity-20"
                                 :class="`bg-${method.color}-100`">
                                 <i :class="`${method.icon} text-${method.color}-600 text-lg`"></i>
@@ -190,12 +203,14 @@ const loadingData = ref(true)
 
 function mapPaymentAppearance(methodName) {
     switch (methodName.toLowerCase()) {
-        case 'qris': return { color: 'red', icon: 'fas fa-qrcode' }
+        case 'qris': return { color: 'green', icon: 'fas fa-qrcode' }
         case 'bank_transfer': return { color: 'green', icon: 'fas fa-university' }
         case 'dana': return { color: 'blue', icon: 'fas fa-money-bill-wave' }
         case 'gopay': return { color: 'blue', icon: 'fas fa-mobile-alt' }
         case 'shopeepay': return { color: 'red', icon: 'fas fa-wallet' }
-        case 'akulaku': return { color: 'red', icon: 'fas fa-credit-card' }
+        case 'akulaku': return { color: 'green', icon: 'fas fa-credit-card' }
+        case 'echannel': return { color: 'blue', icon: 'fas fa-credit-card' }
+        case 'cstore': return { color: 'green', icon: 'far fa-credit-card' }
         case 'credit_card': return { color: 'green', icon: 'far fa-credit-card' }
         default: return { color: 'gray', icon: 'fas fa-money-bill-wave' }
     }
@@ -262,3 +277,15 @@ watchEffect(() => {
     if (selectedMonth.value) fetchLaporan()
 })
 </script>
+
+<style scoped>
+.btn-unduh {
+    background-color: #0E2046;
+    transition: background 0.3s ease;
+}
+
+.btn-unduh:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 4px 12px rgba(248, 123, 16, 0.3);
+}
+</style>

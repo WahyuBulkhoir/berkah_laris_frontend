@@ -3,13 +3,8 @@
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center">
-                        <svg class="h-8 w-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M13 3H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 10H5V5h7v8zm8-8h-4v2h4v7h-4v2h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z">
-                            </path>
-                        </svg>
-                        <span class="ml-2 text-xl font-bold">BerkahLaris</span>
+                    <div class="flex items-center mb-0">
+                        <img src="/img/logo-bl-v-w.png" alt="Logo BerkahLaris" class="h-25 w-auto" />
                     </div>
                     <p class="mt-4 text-gray-300">
                         Solusi elektronik terlengkap untuk kebutuhan Anda. Produk berkualitas dan layanan servis

@@ -11,35 +11,30 @@
             </div>
 
             <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- Kartu Visi & Misi -->
                 <div>
-                    <div
-                        class="bg-blue-600 rounded-lg p-8 text-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-                        <!-- Ikon untuk Visi & Misi -->
+                    <div class="rounded-lg p-8 text-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg
+              bg-gradient-to-tr from-[#0E2046] via-[#143262] to-[#0E2046]">
                         <i class="fas fa-bullseye text-4xl mb-4 block"></i>
-
                         <h3 class="text-2xl font-bold mb-4">Visi & Misi</h3>
-                        <p class="text-blue-100">
+                        <p class="text-white">
                             Menjadi penyedia solusi elektronik terdepan dengan menawarkan produk berkualitas dan layanan
                             servis profesional yang terjangkau bagi semua kalangan masyarakat.
                         </p>
 
-                        <!-- Daftar Visi -->
                         <div class="mt-6 space-y-4">
                             <div v-for="(item, index) in visionItems" :key="index" class="flex items-start">
-                                <i class="fas fa-check-circle text-lg text-white mr-2 mt-1"></i>
+                                <i class="fas fa-check-circle text-lg text-blue-300 mr-2 mt-1"></i>
                                 <p>{{ item }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fitur-Fitur -->
                 <div class="space-y-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div class="bg-gray-50 p-6 rounded-lg flex items-start gap-4" v-for="feature in features"
                         :key="feature.title">
-                        <!-- Ikon yang sesuai dengan tiap fitur -->
-                        <i :class="feature.icon + ' text-blue-600 text-2xl mt-1'"></i>
+                        <i
+                            :class="feature.icon + ' text-2xl mt-1 bg-gradient-to-tr from-[#F87B10] via-[#FEB10B] to-[#F87B10] bg-clip-text text-transparent'"></i>
                         <div>
                             <h3 class="text-lg font-medium text-gray-900 mb-1">
                                 {{ feature.title }}

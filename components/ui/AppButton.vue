@@ -1,10 +1,16 @@
 <template>
     <button :type="type" :disabled="loading || disabled" :class="[
-        'relative rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
+        'relative rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E2046]',
         full ? 'w-full' : '',
-        variant === 'primary' ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white' : '',
-        variant === 'secondary' ? 'bg-gray-200 hover:bg-gray-300 text-gray-800' : '',
-        variant === 'outline' ? 'border border-blue-600 text-blue-600 hover:bg-blue-50' : '',
+        variant === 'primary'
+            ? 'bg-[#0E2046] text-white hover:bg-gradient-to-r hover:from-[#F87B10] hover:to-[#FEB10B]'
+            : '',
+        variant === 'secondary'
+            ? 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+            : '',
+        variant === 'outline'
+            ? 'border border-[#0E2046] text-[#0E2046] hover:bg-blue-50'
+            : '',
         size === 'sm' ? 'text-sm py-2 px-3' : '',
         size === 'md' ? 'text-base py-3 px-4' : '',
         size === 'lg' ? 'text-lg py-3 px-6' : '',

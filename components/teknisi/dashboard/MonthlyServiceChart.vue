@@ -1,20 +1,30 @@
 <template>
     <div class="chart-container">
-        <div class="flex justify-between items-end h-full relative">
+        <div v-if="loading" class="flex items-center justify-center h-full">
+            <div class="flex space-x-2">
+                <div class="w-2 h-10 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-16 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-8 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-20 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-12 bg-gray-300 rounded animate-pulse"></div>
+                <div class="w-2 h-14 bg-gray-300 rounded animate-pulse"></div>
+            </div>
+        </div>
+
+        <div v-else class="flex justify-between items-end h-full relative">
             <div v-for="(month, index) in months" :key="index" class="chart-bar"
                 :style="{ height: `${month.height}%`, left: `${1 + (index * 8.3)}%` }" :data-month="month.name"
                 :data-value="formatCurrency(month.value)" @mouseover="showTooltip($event, month)"
                 @mouseout="hideTooltip"></div>
         </div>
 
-        <div v-if="tooltip.show" class="bg-gray-800 text-white px-2 py-1 rounded text-xs absolute z-10"
+        <div v-if="tooltip.show && !loading" class="bg-gray-800 text-white px-2 py-1 rounded text-xs absolute z-10"
             :style="{ bottom: `${tooltip.bottom}px`, left: `${tooltip.left}px`, transform: 'translateX(-50%)' }">
             {{ tooltip.text }}
         </div>
     </div>
 
-    <!-- Label Bulan -->
-    <div class="flex justify-between text-xs text-gray-500 mt-2 px-2 relative z-10">
+    <div v-if="!loading" class="flex justify-between text-xs text-gray-500 mt-2 px-2 relative z-10">
         <span v-for="(month, index) in months" :key="'label-' + index" class="month-label w-[4%] text-center block">
             {{ month.name }}
         </span>
@@ -28,6 +38,7 @@ import { useNuxtApp } from '#app'
 const { $api } = useNuxtApp()
 
 const months = ref([])
+const loading = ref(true)
 const tooltip = ref({
     show: false,
     text: '',
@@ -49,6 +60,8 @@ const fetchMonthlyData = async () => {
         months.value = res.data
     } catch (err) {
         console.error('Gagal mengambil data grafik bulanan:', err)
+    } finally {
+        loading.value = false
     }
 }
 

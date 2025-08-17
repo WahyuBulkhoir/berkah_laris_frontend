@@ -13,8 +13,7 @@
         <div v-else-if="cartItems.length === 0" class="text-center text-gray-500 py-10">
             <i class="fas fa-shopping-cart text-3xl mb-4"></i>
             <p>Keranjang Anda kosong.</p>
-            <NuxtLink to="/produk"
-                class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+            <NuxtLink to="/produk" class="btn-default inline-block mt-4">
                 Belanja Sekarang
             </NuxtLink>
         </div>
@@ -22,7 +21,7 @@
         <div v-else class="overflow-x-auto space-y-10">
             <!-- Tabel Produk -->
             <table class="min-w-full text-sm text-gray-700">
-                <thead class="bg-blue-600 text-white text-sm uppercase tracking-wider">
+                <thead class="gradient-blue-vertical text-white text-sm uppercase tracking-wider">
                     <tr>
                         <th class="p-4 text-left w-10">
                             <input type="checkbox" v-model="selectAll" @change="toggleSelectAll"
@@ -82,8 +81,7 @@
                 <!-- Tombol-tombol interaktif -->
                 <div class="flex flex-wrap gap-3">
                     <button @click="toggleAlamatDropdown"
-                        class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-300 px-4 py-2 rounded-md transition disabled:opacity-50"
-                        :disabled="isLoadingAlamat">
+                        class="btn-default flex items-center gap-2 disabled:opacity-50" :disabled="isLoadingAlamat">
                         <template v-if="isLoadingAlamat">
                             <i class="fas fa-spinner fa-spin text-blue-500"></i>
                             <span>Memuat Alamat...</span>
@@ -94,8 +92,7 @@
                         </template>
                     </button>
 
-                    <button @click="isiDariProfil"
-                        class="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-300 px-4 py-2 rounded-md transition disabled:opacity-50"
+                    <button @click="isiDariProfil" class="btn-default flex items-center gap-2 disabled:opacity-50"
                         :disabled="isLoadingProfile">
                         <template v-if="isLoadingProfile">
                             <i class="fas fa-spinner fa-spin text-green-500"></i>
@@ -168,7 +165,7 @@
                     Total: Rp {{ formatHarga(selectedTotal) }}
                 </p>
                 <button @click="checkout" :disabled="selectedItems.length === 0 || isLoadingCheckout"
-                    class="mt-4 md:mt-0 flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition disabled:opacity-50">
+                    class="btn-green mt-4 md:mt-0 flex items-center justify-center gap-2 disabled:opacity-50">
                     <template v-if="isLoadingCheckout">
                         <i class="fas fa-spinner fa-spin"></i>
                         <span>Memproses...</span>
@@ -458,3 +455,76 @@ definePageMeta({
     middleware: 'auth-pelanggan'
 })
 </script>
+
+<style scoped>
+.btn-default {
+    background-color: #0E2046;
+    /* Warna biru gelap default */
+    color: white;
+    border-radius: 0.375rem;
+    /* rounded-md */
+    padding-left: 1rem;
+    /* px-4 */
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    /* py-2 */
+    padding-bottom: 0.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(14, 32, 70, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    user-select: none;
+}
+
+.btn-default:hover {
+    background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);
+    box-shadow: 0 6px 18px rgba(248, 123, 16, 0.5);
+    text-decoration: none;
+}
+
+.btn-default:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-green {
+    background-color: #16a34a;
+    /* Warna hijau checkout */
+    color: white;
+    border-radius: 0.375rem;
+    padding-left: 1.5rem;
+    /* px-6 */
+    padding-right: 1.5rem;
+    padding-top: 0.5rem;
+    /* py-2 */
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.btn-green:hover {
+    background-color: #15803d;
+    /* Hijau lebih gelap saat hover */
+}
+
+.btn-green:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.gradient-blue-vertical {
+    background: linear-gradient(to bottom, #0E2046, #082f83);
+    color: white;
+}
+</style>

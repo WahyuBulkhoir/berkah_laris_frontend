@@ -1,9 +1,9 @@
 <template>
     <div class="bg-white rounded-lg shadow p-6">
+
         <AppAlert v-if="alert.message" :type="alert.type" :message="alert.message" @close="alert.message = ''"
             class="mb-4" />
 
-        <!-- Search & Filter -->
         <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
             <h2 class="text-xl font-semibold">📦 Daftar Produk</h2>
             <div class="flex flex-col md:flex-row gap-3">
@@ -20,7 +20,7 @@
                     </option>
                 </select>
                 <button @click="fetchProducts"
-                    class="px-4 py-2 bg-primary-600 text-blue-600 rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
+                    class="px-4 py-2 bg-primary-600 text-[#0E2046] rounded-md hover:bg-primary-700 focus:outline-none flex items-center justify-center">
                     <i class="fas fa-sync-alt mr-2"></i> Refresh
                 </button>
             </div>
@@ -39,10 +39,9 @@
             saat ini.
         </div>
 
-        <!-- Table -->
         <div v-else class="overflow-x-auto">
             <table class="min-w-full">
-                <thead class="bg-blue-600 rounded-lg p-8 text-white">
+                <thead class="bg-[#0E2046] rounded-lg p-8 text-white">
                     <tr>
                         <th class="text-center px-4 py-3">Produk</th>
                         <th class="text-center px-4 py-3">SKU</th>
@@ -67,7 +66,7 @@
                         <td class="py-3 px-4 text-center">{{ produk.stok }}</td>
                         <td class="py-3 px-4 text-center justify-center">
                             <div class="flex space-x-2">
-                                <button @click="openEditModal(produk)" class="text-blue-600 hover:text-blue-800">
+                                <button @click="openEditModal(produk)" class="text-[#0E2046] hover:text-blue-800">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button @click="confirmDelete(produk.id_produk)"
@@ -81,7 +80,6 @@
             </table>
         </div>
 
-        <!-- Pagination -->
         <div class="mt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
             <div class="text-sm text-gray-500">
                 Halaman {{ currentPage }} dari {{ totalPages }} | Total {{ totalItems }} produk
@@ -90,7 +88,7 @@
                 <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
                     class="px-3 py-1 border rounded-md hover:bg-gray-100">&lt;</button>
                 <button v-for="page in totalPages" :key="page" @click="changePage(page)"
-                    :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-blue-600 text-white' : '']">
+                    :class="['px-3 py-1 border rounded-md', currentPage === page ? 'bg-[#0E2046] text-white' : '']">
                     {{ page }}
                 </button>
                 <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
@@ -98,12 +96,11 @@
             </div>
         </div>
 
-        <!-- Modal Edit -->
         <div v-if="isEditing"
             class="fixed inset-0 z-50 bg-blend-color bg-opacity-40 backdrop-blur-sm flex items-center justify-center px-4">
             <div class="bg-white w-full max-w-xl rounded-xl shadow-2xl overflow-hidden relative animate-fade-in">
-                <!-- Header -->
-                <div class="flex justify-between items-center bg-blue-600 px-6 py-4">
+                <div class="flex justify-between items-center px-6 py-4"
+                    style="background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);">
                     <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                         <i class="fas fa-edit"></i> Edit Produk
                     </h2>
@@ -111,7 +108,7 @@
                         &times;
                     </button>
                 </div>
-                <!-- Content -->
+
                 <div class="p-6 space-y-4 text-gray-700 text-sm md:text-base">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-3">
@@ -155,19 +152,25 @@
                             <div>
                                 <label class="text-sm text-gray-600">Gambar Produk</label>
                                 <input type="file" @change="handleEditImageChange"
-                                    class="w-full px-2 py-1 border rounded-md text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-blue-600 file:text-white file:rounded-md file:text-sm" />
+                                    class="w-full px-2 py-1 border rounded-md text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-[#0E2046] file:text-white file:rounded-md file:text-sm" />
                                 <img v-if="editImagePreview"
                                     :src="editImagePreview.startsWith('blob:') ? editImagePreview : `http://localhost:8000/storage/${editImagePreview}`"
                                     class="w-24 h-24 object-cover mt-3 rounded-md border" />
                             </div>
                         </div>
                     </div>
-                    <!-- Tombol Aksi -->
+
+                    <div>
+                        <label class="text-sm text-gray-600">Deskripsi Produk</label>
+                        <textarea v-model="editForm.deskripsi" placeholder="Deskripsi produk" rows="4"
+                            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"></textarea>
+                    </div>
+
                     <div class="flex justify-end gap-2 pt-4 border-t mt-6">
                         <button @click="isEditing = false"
                             class="px-4 py-2 text-sm border rounded-md hover:bg-gray-100">Batal</button>
                         <button @click="submitEdit" :disabled="isSubmitting"
-                            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="btn-simpan px-5 py-2 text-white text-sm rounded-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                             <i v-if="isSubmitting" class="fas fa-spinner fa-spin"></i>
                             <span>{{ isSubmitting ? 'Menyimpan...' : 'Simpan' }}</span>
                         </button>
@@ -251,7 +254,11 @@ const changePage = (page) => {
 
 const openEditModal = (product) => {
     isEditing.value = true
-    editForm.value = { ...product, id_kategori: product.kategori?.id_kategori }
+    editForm.value = {
+        ...product,
+        id_kategori: product.kategori?.id_kategori,
+        deskripsi: product.deskripsi || ''
+    }
     editImagePreview.value = product.gambar_produk
     editImageFile.value = null
 }
@@ -322,3 +329,15 @@ onMounted(() => {
     fetchProducts()
 })
 </script>
+
+<style scoped>
+.btn-simpan {
+    background-color: #0E2046;
+    transition: background 0.3s ease;
+}
+
+.btn-simpan:hover {
+    background: #082f83;
+    box-shadow: 0 4px 12px rgba(248, 123, 16, 0.3);
+}
+</style>

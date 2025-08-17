@@ -2,8 +2,8 @@
     <div v-if="isOpen"
         class="fixed inset-0 z-50 bg-blend-color bg-opacity-40 backdrop-blur-sm flex items-center justify-center px-4">
         <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden relative animate-fade-in">
-            <!-- Header -->
-            <div class="flex justify-between items-center bg-blue-600 px-6 py-4 border-gray-600">
+            <div class="flex justify-between items-center bg-[#0E2046] px-6 py-4 border-gray-600"
+                style="background: linear-gradient(to top, #F87B10 20%, #FEB10B 50%);">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                     <i class="fas fa-file-invoice text-white text-lg"></i> Detail Pemesanan
                 </h2>
@@ -12,51 +12,50 @@
                 </button>
             </div>
 
-            <!-- Content -->
             <div class="p-6 space-y-6 text-gray-700 text-sm md:text-base">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="font-extrabold text-blue-600">Nama Penerima</p>
+                        <p class="font-extrabold text-[#0E2046]">Nama Penerima</p>
                         <p>{{ detail.nama_penerima }}</p>
                     </div>
                     <div>
-                        <p class="font-extrabold text-blue-600">No. HP</p>
+                        <p class="font-extrabold text-[#0E2046]">No. HP</p>
                         <p>{{ detail.no_hp }}</p>
                     </div>
 
                     <div class="md:col-span-2">
-                        <p class="font-extrabold text-blue-600">Alamat</p>
+                        <p class="font-extrabold text-[#0E2046]">Alamat</p>
                         <p>{{ detail.alamat }}</p>
                     </div>
 
                     <div>
-                        <p class="font-extrabold text-blue-600">Tanggal Pemesanan</p>
+                        <p class="font-extrabold text-[#0E2046]">Tanggal Pemesanan</p>
                         <p>{{ formatDate(detail.tgl_pemesanan) }}</p>
                     </div>
                     <div>
-                        <p class="font-extrabold text-blue-600">Catatan Tambahan</p>
+                        <p class="font-extrabold text-[#0E2046]">Catatan Tambahan</p>
                         <p>{{ detail.cat_opsional || '-' }}</p>
                     </div>
 
                     <div>
-                        <p class="font-extrabold text-blue-600">Status Pesanan</p>
+                        <p class="font-extrabold text-[#0E2046]">Status Pesanan</p>
                         <span :class="badgeClass(detail.status_pesanan)">
                             {{ detail.status_pesanan }}
                         </span>
                     </div>
                     <div>
-                        <p class="font-extrabold text-blue-600">Status Pembayaran</p>
+                        <p class="font-extrabold text-[#0E2046]">Status Pembayaran</p>
                         <span :class="badgePayment(detail.payment_status)">
                             {{ detail.payment_status }}
                         </span>
                     </div>
 
                     <div>
-                        <p class="font-extrabold text-blue-600">Midtrans Order ID</p>
+                        <p class="font-extrabold text-[#0E2046]">Midtrans Order ID</p>
                         <p>{{ detail.midtrans_order_id || '-' }}</p>
                     </div>
                     <div>
-                        <p class="font-extrabold text-blue-600">Total Pembayaran</p>
+                        <p class="font-extrabold text-[#0E2046]">Total Pembayaran</p>
                         <p class="text-lg font-semibold text-green-700">
                             Rp {{ Number(detail.total).toLocaleString('id-ID') }}
                         </p>
